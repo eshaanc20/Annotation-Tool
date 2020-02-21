@@ -7,7 +7,7 @@
                 <button>Uninterested</button>
             </div>
             <canvas id="canvas"></canvas>
-            <input id="imageUpload" type="file" accept="image/*">
+            <input id="imageUpload" type="file" accept="image/*" (change)="uploadImage($event)">
         </div>
         <div class="JSONButton-container">
             <button>JSON</button>

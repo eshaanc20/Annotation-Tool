@@ -1,0 +1,13 @@
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 1px 4px 4px lightgray;
+    margin: -10px;
+    padding: 10px;
+}
+
+.github-button {
+    height: 40px;
+    width: 60px;
+    margin-top: 1%;
+}

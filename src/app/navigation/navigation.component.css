@@ -10,5 +10,8 @@
 .github-button {
     height: 40px;
     width: 80px;
-    margin-top: 1%;
+    font-size: 14px;
+    background-color: #346aa8;
+    color: white;
+    margin-top: 20px;
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Point} from './classes';
 import {Annotation} from './classes';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -44,7 +45,6 @@ export class AppComponent {
     const rectangle = this.canvas.getBoundingClientRect();
     this.x1 = event.pageX - rectangle.left;
     this.y1 = event.pageY - rectangle.top;
-    this.Point1 = new Point(id: event.pageX - rectangle.left, event.pageY - rectangle.top);
     this.draw = true;
   }
 

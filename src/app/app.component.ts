@@ -8,17 +8,20 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   image: string = null;
-  uploadImage = (event) => {
+  uploadImage = (event: any) => {
     if (event.target.files) {
       const file = event.target.files[0];
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
-      fileReader.onload = (e) => {
-        let newImage = new Image();
-        this.image = fileReader.result as string;
-        console.log(this.image);
+      fileReader.onloadend = (e) => {
+        let newImage = new Image(100,100);
+        newImage.src = fileReader.result as string;
+        let canvas = document.getElementById('canvas') as HTMLCanvasElement;
+        let context = canvas.getContext('2d');
+        newImage.onload = () => {
+          context.drawImage(newImage, 0, 0, 700, 500);
+        }
       };
     }
   }
-
 }

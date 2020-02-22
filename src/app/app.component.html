@@ -6,11 +6,18 @@
                 <button>Interested</button>
                 <button>Uninterested</button>
             </div>
-            <canvas id="canvas" width='700px' height='500px'></canvas>
+            <canvas 
+                id="canvas" 
+                width='700px' 
+                height='500px' 
+                (mousedown)="beginSelecting($event)" 
+                (mouseup)="finishSelecting($event)" 
+                
+            ></canvas>
             <input id="imageUpload" type="file" accept="image/*" (change)="uploadImage($event)">
         </div>
         <div class="JSONButton-container">
-            <button>JSON</button>
+            <button (click)="uploadImage($event)">JSON</button>
         </div>
     </div>
 </div>

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import randomstring from 'randomstring';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';

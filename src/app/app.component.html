@@ -3,8 +3,8 @@
     <div class="container">
         <div class="canvas-container">
             <div class="tools">
-                <button>Interested</button>
-                <button>Uninterested</button>
+                <button (click)="confirmSelected($event, 'Interested')">Interested</button>
+                <button (click)="confirmSelected($event, 'Uninterested')">Uninterested</button>
             </div>
             <canvas 
                 id="canvas" 

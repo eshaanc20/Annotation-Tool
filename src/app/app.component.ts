@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Point} from './classes';
+import {Annotation} from './classes';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +9,19 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  image: string = null;
+  image: HTMLImageElement = null;
   draw: boolean = false;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   length: number;
   width: number;
+  Point1: Point;
+  Point2: Point;
   x1: number;
   y1: number;
   x2: number;
   y2: number;
-  rectangle;
+  annotations: Array<Annotation>;
 
   uploadImage = (event: any) => {
     if (event.target.files) {
@@ -25,33 +29,45 @@ export class AppComponent {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onloadend = (e) => {
-        let newImage = new Image();
-        newImage.src = fileReader.result as string;
+        this.image = new Image();
+        this.image.src = fileReader.result as string;
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
         this.context = this.canvas.getContext('2d');
-        newImage.onload = () => {
-          this.context.drawImage(newImage, 0, 0, 700, 500);
+        this.image.onload = () => {
+          this.context.drawImage(this.image, 0, 0, 700, 500);
         }
       };
     }
   }
 
   beginSelecting = (event: any) => {
-    this.rectangle = this.canvas.getBoundingClientRect();
-    this.x1 = event.pageX - this.rectangle.left;
-    this.y1 = event.pageY - this.rectangle.top;
+    const rectangle = this.canvas.getBoundingClientRect();
+    this.x1 = event.pageX - rectangle.left;
+    this.y1 = event.pageY - rectangle.top;
+    this.Point1 = new Point(id: event.pageX - rectangle.left, event.pageY - rectangle.top);
     this.draw = true;
   }
 
-  finishSelecting = (event: any) => {
-    this.x2 = event.pageX - this.rectangle.left;
-    this.y2 = event.pageY - this.rectangle.top;
+  select = (event: any) => {
+    const rectangle = this.canvas.getBoundingClientRect();
+    const xMiddle = event.pageX - rectangle.left;
+    const yMiddle = event.pageY - rectangle.top;
     if (this.draw) {
-      this.context.beginPath();
-      this.context.lineWidth = 4;
-      this.context.strokeRect(this.x1, this.y1, Math.abs(this.x2 - this.x1), Math.abs(this.y2 - this.y1));
-      this.context.stroke();
+      if (this.draw) {
+        this.context.beginPath();
+        this.context.lineWidth = 2;
+        this.context.clearRect(this.x1, this.y1, Math.abs(xMiddle - this.x1), Math.abs(yMiddle - this.y1));
+        this.context.drawImage(this.image, 0, 0, 700, 500);
+        this.context.strokeRect(this.x1, this.y1, Math.abs(xMiddle - this.x1), Math.abs(yMiddle - this.y1));
+        this.context.stroke();
+      }
     }
+  }
+
+  finishSelecting = (event: any) => {
+    const rectangle = this.canvas.getBoundingClientRect();
+    this.x2 = event.pageX - rectangle.left;
+    this.y2 = event.pageY - rectangle.top;
     this.draw = false;
   }
 }

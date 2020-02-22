@@ -18,6 +18,7 @@ export class AppComponent {
   Point1: Point;
   Point2: Point;
   annotations: Array<Annotations> = [];
+  JSONoutput: string = null;
 
   uploadImage = (event: any) => {
     if (event.target.files) {
@@ -33,7 +34,7 @@ export class AppComponent {
           this.imageName = file.name;
           this.annotations.push(new Annotations(file.name));
           this.context.drawImage(this.image, 0, 0, 700, 500);
-        }
+        };
       };
     }
   }
@@ -74,10 +75,12 @@ export class AppComponent {
   }
 
   beginSelecting = (event: any) => {
-    const rectangle = this.canvas.getBoundingClientRect();
-    const random = Math.floor((Math.random() * 10000) + 8).toString();
-    this.Point1 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
-    this.draw = true;
+    if (this.imageName != null) {
+      const rectangle = this.canvas.getBoundingClientRect();
+      const random = Math.floor((Math.random() * 10000) + 8).toString();
+      this.Point1 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
+      this.draw = true;
+    }
   }
 
   select = (event: any) => {
@@ -95,9 +98,26 @@ export class AppComponent {
   }
 
   finishSelecting = (event: any) => {
-    const rectangle = this.canvas.getBoundingClientRect();
-    const random = Math.floor((Math.random() * 10000) + 8).toString();
-    this.Point2 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
-    this.draw = false;
+    if (this.draw) {
+      const rectangle = this.canvas.getBoundingClientRect();
+      const random = Math.floor((Math.random() * 10000) + 8).toString();
+      this.Point2 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
+      this.draw = false;
+    }
+  }
+
+  getOutput = () => {
+    this.JSONoutput = JSON.stringify(this.annotations);
+  }
+
+  clear = (event: any) => {
+    const index = this.annotations.findIndex(image => {
+      return image.imageName === this.imageName;
+    });
+    if (index !== -1) {
+      this.annotations.splice(index, 1);
+      this.getOutput();
+      this.drawSelected();
+    }
   }
 }

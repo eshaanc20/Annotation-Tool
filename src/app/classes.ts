@@ -26,10 +26,11 @@ class Annotation {
 
 class Annotations {
     imageName: string;
-    annotations: Array<Annotation> = [];
+    annotations: Array<Annotation>;
 
     constructor(name: string) {
         this.imageName = name;
+        this.annotations = [];
     }
 
     add(annotation: Annotation) {

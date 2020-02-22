@@ -3,14 +3,21 @@
     <div class="container">
         <div class="canvas-container">
             <div class="tools">
-                <button>Interested</button>
-                <button>Uninterested</button>
+                <button (click)="confirmSelected($event, 'Interested')">Interested</button>
+                <button (click)="confirmSelected($event, 'Uninterested')">Uninterested</button>
             </div>
-            <canvas id="canvas"></canvas>
-            <input id="imageUpload" type="file" accept="image/*">
+            <canvas 
+                id="canvas" 
+                width='700px' 
+                height='500px' 
+                (mousedown)="beginSelecting($event)" 
+                (mouseup)="finishSelecting($event)" 
+                (mousemove)="select($event)"
+            ></canvas>
+            <input id="imageUpload" type="file" accept="image/*" (change)="uploadImage($event)">
         </div>
         <div class="JSONButton-container">
-            <button>JSON</button>
+            <button (click)="uploadImage($event)">JSON</button>
         </div>
     </div>
 </div>

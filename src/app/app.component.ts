@@ -49,27 +49,6 @@ export class AppComponent {
     }
   }
 
-  // confirms the selected rectangle on the canvas and adds the annotation given "Interesting" or "Uninteresting"
-  // type is the parameter that holds either "Interesting" or "Uninteresting" annotation passed by button that is clicked in the HTML file
-  confirmSelected = (event: any, type: string) => {
-    if (this.image == null) {
-    } else {
-      // finds the index for the Annotations object of this current image
-      const index = this.annotations.findIndex(image => {
-        return image.imageName === this.imageName;
-      });
-      // creates a random string
-      const random = Math.floor((Math.random() * 10000) + 8).toString();
-      // adds a new Annotation to the Annotations object for this image using the add method defined in the class
-      this.annotations[index].add(new Annotation(random, this.Point1, this.Point2, type));
-      this.drawSelected();
-      // updates the JSON output if button is clicked
-      if (this.JSONbutton) {
-        this.getOutput();
-      }
-    }
-  }
-
   // draws the confirmed annotations for current image on canvas
   drawSelected = () => {
     // finds the index for the Annotations object of this current image
@@ -141,6 +120,27 @@ export class AppComponent {
     }
   }
 
+  // confirms the selected rectangle on the canvas and adds the annotation given "Interesting" or "Uninteresting"
+  // type is the parameter that holds either "Interesting" or "Uninteresting" annotation passed by button that is clicked in the HTML file
+  confirmSelected = (event: any, type: string) => {
+    if (this.image == null) {
+    } else {
+      // finds the index for the Annotations object of this current image
+      const index = this.annotations.findIndex(image => {
+        return image.imageName === this.imageName;
+      });
+      // creates a random string
+      const random = Math.floor((Math.random() * 10000) + 8).toString();
+      // adds a new Annotation to the Annotations object for this image using the add method defined in the class
+      this.annotations[index].add(new Annotation(random, this.Point1, this.Point2, type));
+      this.drawSelected();
+      // updates the JSON output if button is clicked
+      if (this.JSONbutton) {
+        this.getOutput();
+      }
+    }
+  }
+
   // sets the output of the JSONoutput state variable to data about the confirmed annotations in JSON format
   // the HTML element linked to this state variable in the HTML file will update its content when this variable changes
   getOutput = () => {
@@ -159,6 +159,7 @@ export class AppComponent {
       // removes the Annotations object of this current image
       this.annotations.splice(index, 1);
       this.getOutput();
+      // clears the canvas
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
       let fileElement = document.getElementById('imageUpload') as HTMLInputElement;
       fileElement.value = '';

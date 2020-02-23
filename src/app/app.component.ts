@@ -49,7 +49,7 @@ export class AppComponent {
   }
 
   // confirms the selected rectangle on the canvas and adds the annotation given "Interested" or "Uninterested"
-  // type is the parameter that holds either "Interested" or "Uninterested" annotation
+  // type is the parameter that holds either "Interested" or "Uninterested" annotation passed by the button that is clicked in the HTML file
   confirmSelected = (event: any, type: string) => {
     if (this.image == null) {
     } else {

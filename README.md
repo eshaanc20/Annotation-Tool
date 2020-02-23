@@ -1,4 +1,4 @@
-# AnnotationTool
+# Annotation Tool
 
 This is an image annotation tool created using Angular.
 

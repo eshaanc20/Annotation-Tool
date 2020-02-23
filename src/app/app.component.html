@@ -1,8 +1,10 @@
 <div>
+    <!--Navigation component defined in the navigation folder-->
     <app-navigation></app-navigation>
     <div class="container">
         <div class="canvas-container">
             <div class="tools">
+                <!--Calls the functions defined in app.component.ts file when buttons are clicked-->
                 <button (click)="confirmSelected($event, 'Interested')" id="interestedButton">Interested</button>
                 <button (click)="confirmSelected($event, 'Uninterested')" id="uninterestedButton">Uninterested</button>
                 <button (click)="clear($event)" id="clearButton">Clear</button>
@@ -11,9 +13,9 @@
                 id="canvas" 
                 width='750px' 
                 height='500px' 
-                (mousedown)="beginSelecting($event)" 
-                (mouseup)="finishSelecting($event)" 
+                (mousedown)="beginSelecting($event)"
                 (mousemove)="select($event)"
+                (mouseup)="finishSelecting($event)" 
             ></canvas>
             <input id="imageUpload" type="file" accept="image/*" (change)="uploadImage($event)">
         </div>
@@ -23,6 +25,7 @@
                 <button (click)="getOutput($event)" id="outputButton">JSON Output</button>
             </div>
         </div>
+        <!--The content of this element is the data in the state variable JSONoutput defined in app.component.ts file-->
         <p style="text-align: left; margin-bottom: 40px;">{{JSONoutput}}</p>
     </div>
 </div>

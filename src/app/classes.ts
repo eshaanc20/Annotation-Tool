@@ -1,3 +1,4 @@
+// handles points of a rectangle on the canvas
 class Point {
     pointID: string;
     x: number;
@@ -10,6 +11,7 @@ class Point {
     }
 }
 
+// handles an Annotation
 class Annotation {
     annotationID: string;
     upperLeft: Point;
@@ -24,8 +26,11 @@ class Annotation {
     }
 }
 
+// handles multiple annotations for an image
 class Annotations {
+    // name of image
     imageName: string;
+    // array of Annotation objects
     annotations: Array<Annotation>;
 
     constructor(name: string) {
@@ -33,18 +38,16 @@ class Annotations {
         this.annotations = [];
     }
 
+    // method for adding a new Annotation object to the array of Annotation objects for this image
     add(annotation: Annotation) {
         this.annotations.push(annotation);
     }
-
-    length() {
-        return this.annotations.length;
-    }
 }
 
+// exports all classes to be used in app.component.ts
 export {
     Point,
     Annotation,
     Annotations
-}
+};
 

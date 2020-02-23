@@ -48,8 +48,8 @@ export class AppComponent {
     }
   }
 
-  // confirms the selected rectangle on the canvas and adds the annotation given "Interested" or "Uninterested"
-  // type is the parameter that holds either "Interested" or "Uninterested" annotation passed by the button that is clicked in the HTML file
+  // confirms the selected rectangle on the canvas and adds the annotation given "Interesting" or "Uninteresting"
+  // type is the parameter that holds either "Interesting" or "Uninteresting" annotation passed by button that is clicked in the HTML file
   confirmSelected = (event: any, type: string) => {
     if (this.image == null) {
     } else {
@@ -79,7 +79,7 @@ export class AppComponent {
       this.context.beginPath();
       this.context.lineWidth = 2;
       // decides the color of the rectangle based on type
-      if (annotation.type === 'Interested') {
+      if (annotation.type === 'Interesting') {
         this.context.strokeStyle = 'green';
       } else {
         this.context.strokeStyle = 'orange';

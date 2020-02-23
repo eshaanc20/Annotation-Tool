@@ -19,6 +19,7 @@ export class AppComponent {
   Point1: Point;
   Point2: Point;
   annotations: Array<Annotations> = [];
+  JSONbutton: boolean = false;
   JSONoutput: string = null;
 
   // handles uploading images and drawing it on the canvas
@@ -59,9 +60,13 @@ export class AppComponent {
       });
       // creates a random string
       const random = Math.floor((Math.random() * 10000) + 8).toString();
-      // Adds a new Annotation to the Annotations object for this image using the add method defined in the class
+      // adds a new Annotation to the Annotations object for this image using the add method defined in the class
       this.annotations[index].add(new Annotation(random, this.Point1, this.Point2, type));
       this.drawSelected();
+      // updates the JSON output if button is clicked
+      if (this.JSONbutton) {
+        this.getOutput();
+      }
     }
   }
 
@@ -141,6 +146,7 @@ export class AppComponent {
   getOutput = () => {
     const output: string = JSON.stringify(this.annotations);
     this.JSONoutput = output === '[]' ? null : output;
+    this.JSONbutton = true;
   }
 
   // clears all annotations of this current image

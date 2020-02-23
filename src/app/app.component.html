@@ -3,13 +3,13 @@
     <div class="container">
         <div class="canvas-container">
             <div class="tools">
-                <button (click)="confirmSelected($event, 'Interested')">Interested</button>
-                <button (click)="confirmSelected($event, 'Uninterested')">Uninterested</button>
-                <button (click)="clear($event)">Clear</button>
+                <button (click)="confirmSelected($event, 'Interested')" id="interestedButton">Interested</button>
+                <button (click)="confirmSelected($event, 'Uninterested')" id="uninterestedButton">Uninterested</button>
+                <button (click)="clear($event)" id="clearButton">Clear</button>
             </div>
             <canvas 
                 id="canvas" 
-                width='700px' 
+                width='750px' 
                 height='500px' 
                 (mousedown)="beginSelecting($event)" 
                 (mouseup)="finishSelecting($event)" 
@@ -20,9 +20,9 @@
         <div class="JSONoutput-container">
             <div></div>
             <div>
-                <button (click)="getOutput($event)">JSON</button>
+                <button (click)="getOutput($event)" id="outputButton">JSON Output</button>
             </div>
         </div>
-        <p>{{JSONoutput}}</p>
+        <p style="text-align: left; margin-bottom: 40px;">{{JSONoutput}}</p>
     </div>
 </div>

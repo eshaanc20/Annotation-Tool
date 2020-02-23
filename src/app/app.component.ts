@@ -26,14 +26,14 @@ export class AppComponent {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onloadend = (e) => {
-        this.image = new Image();
+        this.image = new Image(750,500);
         this.image.src = fileReader.result as string;
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
         this.context = this.canvas.getContext('2d');
         this.image.onload = () => {
           this.imageName = file.name;
           this.annotations.push(new Annotations(file.name));
-          this.context.drawImage(this.image, 0, 0, 700, 500);
+          this.context.drawImage(this.image, 0, 0, 750, 500);
         };
       };
     }
@@ -55,7 +55,7 @@ export class AppComponent {
     const index = this.annotations.findIndex(image => {
       return image.imageName === this.imageName;
     });
-    this.context.drawImage(this.image, 0, 0, 700, 500);
+    this.context.drawImage(this.image, 0, 0, 750, 500);
     this.annotations[index].annotations.forEach(annotation => {
       this.context.beginPath();
       this.context.lineWidth = 2;
@@ -107,7 +107,8 @@ export class AppComponent {
   }
 
   getOutput = () => {
-    this.JSONoutput = JSON.stringify(this.annotations);
+    const output: string = JSON.stringify(this.annotations);
+    this.JSONoutput = output === '[]' ? null : output;
   }
 
   clear = (event: any) => {
@@ -117,7 +118,15 @@ export class AppComponent {
     if (index !== -1) {
       this.annotations.splice(index, 1);
       this.getOutput();
-      this.drawSelected();
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      let fileElement = document.getElementById('imageUpload') as HTMLInputElement;
+      fileElement.value = '';
+      this.imageName = null;
+      this.image = null;
+      this.canvas = null;
+      this.context = null;
+      this.Point1 = null;
+      this.Point2 = null;
     }
   }
 }

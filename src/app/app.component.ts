@@ -18,6 +18,7 @@ export class AppComponent {
   Point1: Point;
   Point2: Point;
   annotations: Array<Annotations> = [];
+  JSONoutput: string = null;
 
   uploadImage = (event: any) => {
     if (event.target.files) {
@@ -25,15 +26,15 @@ export class AppComponent {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onloadend = (e) => {
-        this.image = new Image();
+        this.image = new Image(750,500);
         this.image.src = fileReader.result as string;
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
         this.context = this.canvas.getContext('2d');
         this.image.onload = () => {
           this.imageName = file.name;
           this.annotations.push(new Annotations(file.name));
-          this.context.drawImage(this.image, 0, 0, 700, 500);
-        }
+          this.context.drawImage(this.image, 0, 0, 750, 500);
+        };
       };
     }
   }
@@ -54,7 +55,7 @@ export class AppComponent {
     const index = this.annotations.findIndex(image => {
       return image.imageName === this.imageName;
     });
-    this.context.drawImage(this.image, 0, 0, 700, 500);
+    this.context.drawImage(this.image, 0, 0, 750, 500);
     this.annotations[index].annotations.forEach(annotation => {
       this.context.beginPath();
       this.context.lineWidth = 2;
@@ -74,10 +75,12 @@ export class AppComponent {
   }
 
   beginSelecting = (event: any) => {
-    const rectangle = this.canvas.getBoundingClientRect();
-    const random = Math.floor((Math.random() * 10000) + 8).toString();
-    this.Point1 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
-    this.draw = true;
+    if (this.imageName != null) {
+      const rectangle = this.canvas.getBoundingClientRect();
+      const random = Math.floor((Math.random() * 10000) + 8).toString();
+      this.Point1 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
+      this.draw = true;
+    }
   }
 
   select = (event: any) => {
@@ -95,9 +98,35 @@ export class AppComponent {
   }
 
   finishSelecting = (event: any) => {
-    const rectangle = this.canvas.getBoundingClientRect();
-    const random = Math.floor((Math.random() * 10000) + 8).toString();
-    this.Point2 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
-    this.draw = false;
+    if (this.draw) {
+      const rectangle = this.canvas.getBoundingClientRect();
+      const random = Math.floor((Math.random() * 10000) + 8).toString();
+      this.Point2 = new Point(random, event.pageX - rectangle.left, event.pageY - rectangle.top);
+      this.draw = false;
+    }
+  }
+
+  getOutput = () => {
+    const output: string = JSON.stringify(this.annotations);
+    this.JSONoutput = output === '[]' ? null : output;
+  }
+
+  clear = (event: any) => {
+    const index = this.annotations.findIndex(image => {
+      return image.imageName === this.imageName;
+    });
+    if (index !== -1) {
+      this.annotations.splice(index, 1);
+      this.getOutput();
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      let fileElement = document.getElementById('imageUpload') as HTMLInputElement;
+      fileElement.value = '';
+      this.imageName = null;
+      this.image = null;
+      this.canvas = null;
+      this.context = null;
+      this.Point1 = null;
+      this.Point2 = null;
+    }
   }
 }
